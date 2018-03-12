@@ -1,0 +1,23 @@
+<div class="panel panel-info container-fluid">
+	<div class="panel-heading row">
+		<span class='col-md-4'>
+		{% if wb.text.author == wb.user %}
+			<small class='text-primary'><i>【原创】</i></small>
+		{% else %}
+			<small class='text-warning'><i>【转发】</i></small>
+		{% endif %}
+			作者: {{ wb.text.author }}
+		</span>
+		<span class='col-md-5'>时间: {{ wb.create_time }}</span>
+		<a class='btn btn-default col-md-1' onclick=''>点赞: <span class="badge">0</span></a>
+		{% if wb.user.id == user.id %}
+		<a class='btn btn-default col-md-1' disabled>转发: <span class="badge">0</span></a>
+		{% else %}
+		<a class='btn btn-default col-md-1' data-toggle="modal" data-target="#forward_modal" onclick='#)'>转发: <span class="badge">0</span></a>
+		{% endif %}
+		<a class='btn btn-default col-md-1' onclick='#)'>评论: <span class="badge">0</span></a>
+	</div>
+	<div class="panel-body">
+		<p>{{ wb.text.text }}</p>
+	</div>
+</div>

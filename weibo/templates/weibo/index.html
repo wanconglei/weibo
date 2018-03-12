@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% block title %}首页{% endblock %}
+{% block base_header %}
+	<h1 class='text-center'>简易微博</h1>
+{% endblock %}
+{% block base_header_to_content %}<hr />{% endblock %}
+{% block base_content %}
+{% if user.is_authenticated %}
+<div class="jumbotron container-fluid">
+	<div class='row'>
+		<div class='col-md-4'>
+			<h1><a href="{% url 'weibo:homepage' %}">个人中心</a></h1>
+			<h1><a href='#'>我的主页</a></h1>
+		</div>
+		<div class='col-md-8'>
+			<h1>crossin 的编程教室<small>大作业——</small></h1>
+			<h1 class='text-center'><i class='text-danger'>简易微博</i></h1>
+		</div>
+	</div>
+	<div class='row'>
+		<p><a class='btn btn-primary pull-right' href="{% url 'logout' %}?next={{ request.path }}">退出登录</a></p>
+	</div>
+</div>
+<hr />
+<table class="table table-hover table-striped table-bordered">
+	<caption>
+		<h3 class='text-center'>新新博主</h3>
+	</caption>
+	<thead class='thead-inverse'>
+		<tr>
+			<th>昵称</th>
+			<th>性别</th>
+			<th>加入时间</th>
+		</tr>
+	</thead>
+	<tbody>
+	{% for wb_user in users %}
+		<tr>
+            <td><a href="{% url 'weibo:userpage' %}">
+                {% if wb_user.nickname %}
+                {{ wb_user.nickname }}
+                {% else %}
+                {{ wb_user.username }}
+                {% endif %}
+            </a></td>
+			<td>{{ wb_user.get_gender_display }}</td>
+			<td>{{ wb_user.date_joined }}</td>
+		</tr>
+	{% endfor %}
+	</tbody>
+</table>
+{% else %}
+    <p style="text-align:center">你还没有登录，请
+        <button class="btn btn-default"><a href="{% url 'login' %}?next={{ request.path }}">登录</a></button>
+        或者
+        <button class="btn btn-default"><a href="{% url 'account:register' %}?next={{ request.path }}">注册</a></button>
+    </p>
+{% endif %}
+{% endblock %}
+{% block base_content_to_footer %}<hr />{% endblock %}
