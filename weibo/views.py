@@ -53,3 +53,23 @@ def user_page(request):
         'wbs': wbs
     }
     return render(request, 'weibo/userpage.html', context=context)
+
+
+def user_follow(request):
+    uid = request.GET.get('uid')
+    wb_user = get_object_or_404(WBUser, id=uid)
+    user = get_object_or_404(WBUser, id=request.user.id)
+    user.follow(wb_user)
+    return HttpResponse()
+
+
+def user_unfollow(request):
+    """
+    解除关注
+    """
+    uid = request.GET.get('uid')
+    wb_user = get_object_or_404(WBUser, id=uid)
+    user = get_object_or_404(WBUser, id=request.user.id)
+    user.unfollow(wb_user)
+    return HttpResponse()
+

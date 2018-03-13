@@ -36,7 +36,7 @@
 	<tbody>
 	{% for wb_user in users %}
 		<tr>
-            <td><a href="{% url 'weibo:userpage' %}">
+            <td><a href="{% url 'weibo:userpage' %}?uid={{ wb_user.id }}">
                 {% if wb_user.nickname %}
                 {{ wb_user.nickname }}
                 {% else %}

@@ -24,7 +24,7 @@
 	</p>
 </div>
 {% for wb in wbs %}
-	{% include "weibo\list_wb.html" %}
+	{% include "weibo/list_wb.html" %}
 {% endfor %}
 {% endblock %}
 {% block script %}
@@ -32,7 +32,7 @@
 function follow_this(e){
 	// 关注用户
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', '{% url "wb:follow" %}?uid={{ wb_user.id }}', true);
+	xhr.open('GET', '{% url "weibo:follow" %}?uid={{ wb_user.id }}', true);
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			e.setAttribute('onclick', 'unfollow_this(this)');
@@ -46,7 +46,7 @@ function follow_this(e){
 function unfollow_this(e){
 	// 解除关注
 	var xhr = new XMLHttpRequest();
-	xhr.open('GET', '{% url "wb:unfollow" %}?uid={{ wb_user.id }}', true);
+	xhr.open('GET', '{% url "weibo:unfollow" %}?uid={{ wb_user.id }}', true);
 	xhr.onreadystatechange=function(){
 		if(xhr.readyState == 4 && xhr.status == 200){
 			e.setAttribute('onclick', 'follow_this(this)');
@@ -54,7 +54,7 @@ function unfollow_this(e){
 			e.innerText = '关注';
 		};
 	};
-	xhr.send();	
+	xhr.send();
 }
 </script>
 {% endblock %}

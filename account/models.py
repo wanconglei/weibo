@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from weibo.models import WeiBo, WBText
+from django.urls import reverse
 
 
 # Create your models here.
@@ -25,6 +26,15 @@ class WBUser(AbstractUser):
         wbt = WBText.objects.create(author=self, text=text)
         wb = WeiBo.objects.create(user=self, text=wbt)
         return wb
+
+    def follow(self, user: 'WBUser'):
+        self.followers.add(user)
+
+    def unfollow(self, user: 'WBUser'):
+        self.followers.remove(user)
+
+    def get_absolute_url(self):
+        return reverse('weibo:user_page', kwargs={'id': self.id})
 
     class Meta:
         ordering = ['-id', 'username']
